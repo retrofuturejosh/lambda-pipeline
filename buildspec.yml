@@ -1,0 +1,10 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install time
+      - aws cloudformation package --template-file ./templates/samTemplate.yml --s3-bucket sohnserverlessbucket --output-template-file outputSamTemplate.yaml
+artifacts:
+  type: zip
+  files:
+    - outputSamTemplate.yml
