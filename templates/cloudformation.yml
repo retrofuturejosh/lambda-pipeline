@@ -18,96 +18,97 @@ Parameters:
     Type: String
     Description: S3 Bucket where artifacts will be stored
 Resources:
-  S3Bucket:
+  S3BuildBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
     Properties:
       BucketName: !Ref S3Bucket
-  CloudFormationServiceRole:
-      Type: "AWS::IAM::Role"
-      Properties:
-        RoleName: "CloudFormation-LambdaPipeline-ServiceRole"
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            -
-              Effect: "Allow"
-              Principal:
-                Service:
-                  - "appsync.amazonaws.com"
-              Action:
-                - "sts:AssumeRole"
-        Policies:
-          -
-            PolicyName: "CloudFormation-LambdaPipeline-Policy"
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-              - Action:
-                - s3:GetObject
-                - s3:GetObjectVersion
-                - s3:GetBucketVersioning
-                Resource: "*"
-                Effect: Allow
-              - Action:
-                - s3:PutObject
-                Resource:
-                - arn:aws:s3:::codepipeline*
-                Effect: Allow
-              - Action:
-                - lambda:*
-                Resource:
-                - arn:aws:lambda:region:id:function:*
-                Effect: Allow
-              - Action:
-                - apigateway:*
-                Resource:
-                - arn:aws:apigateway:region::*
-                Effect: Allow
-              - Action:
-                - iam:GetRole
-                - iam:CreateRole
-                - iam:DeleteRole
-                - iam:PutRolePolicy
-                Resource:
-                - arn:aws:iam::id:role/*
-                Effect: Allow
-              - Action:
-                - iam:AttachRolePolicy
-                - iam:DeleteRolePolicy
-                - iam:DetachRolePolicy
-                Resource:
-                - arn:aws:iam::id:role/*
-                Effect: Allow
-              - Action:
-                - iam:PassRole
-                Resource:
-                - "*"
-                Effect: Allow
-              - Action:
-                - cloudformation:CreateChangeSet
-                Resource:
-                - arn:aws:cloudformation:region:aws:transform/Serverless-2016-10-31
-                Effect: Allow
-              - Action:
-                - codedeploy:CreateApplication
-                - codedeploy:DeleteApplication
-                - codedeploy:RegisterApplicationRevision
-                Resource:
-                - arn:aws:codedeploy:region:id:application:*
-                Effect: Allow
-              - Action:
-                - codedeploy:CreateDeploymentGroup
-                - codedeploy:CreateDeployment
-                - codedeploy:GetDeployment
-                Resource:
-                - arn:aws:codedeploy:region:id:deploymentgroup:*
-                Effect: Allow
-              - Action:
-                - codedeploy:GetDeploymentConfig
-                Resource:
-                - arn:aws:codedeploy:region:id:deploymentconfig:*
-                Effect: Allow
+
+  # CloudFormationServiceRole:
+  #     Type: "AWS::IAM::Role"
+  #     Properties:
+  #       RoleName: "cfLambdaPipelineServiceRole"
+  #       AssumeRolePolicyDocument:
+  #         Version: "2012-10-17"
+  #         Statement:
+  #           -
+  #             Effect: "Allow"
+  #             Principal:
+  #               Service:
+  #                 - "cloudformation.amazonaws.com"
+  #             Action:
+  #               - "sts:AssumeRole"
+  #       Policies:
+  #         -
+  #           PolicyName: "cfLambdaPipelinePolicy"
+  #           PolicyDocument:
+  #             Version: "2012-10-17"
+  #             Statement:
+  #             - Action:
+  #               - s3:GetObject
+  #               - s3:GetObjectVersion
+  #               - s3:GetBucketVersioning
+  #               Resource: "*"
+  #               Effect: Allow
+  #             - Action:
+  #               - s3:PutObject
+  #               Resource:
+  #               - arn:aws:s3:::codepipeline*
+  #               Effect: Allow
+  #             - Action:
+  #               - lambda:*
+  #               Resource:
+  #               - arn:aws:lambda:region:id:function:*
+  #               Effect: Allow
+  #             - Action:
+  #               - apigateway:*
+  #               Resource:
+  #               - arn:aws:apigateway:region::*
+  #               Effect: Allow
+  #             - Action:
+  #               - iam:GetRole
+  #               - iam:CreateRole
+  #               - iam:DeleteRole
+  #               - iam:PutRolePolicy
+  #               Resource:
+  #               - arn:aws:iam::id:role/*
+  #               Effect: Allow
+  #             - Action:
+  #               - iam:AttachRolePolicy
+  #               - iam:DeleteRolePolicy
+  #               - iam:DetachRolePolicy
+  #               Resource:
+  #               - arn:aws:iam::id:role/*
+  #               Effect: Allow
+  #             - Action:
+  #               - iam:PassRole
+  #               Resource:
+  #               - "*"
+  #               Effect: Allow
+  #             - Action:
+  #               - cloudformation:CreateChangeSet
+  #               Resource:
+  #               - arn:aws:cloudformation:region:aws:transform/Serverless-2016-10-31
+  #               Effect: Allow
+  #             - Action:
+  #               - codedeploy:CreateApplication
+  #               - codedeploy:DeleteApplication
+  #               - codedeploy:RegisterApplicationRevision
+  #               Resource:
+  #               - arn:aws:codedeploy:region:id:application:*
+  #               Effect: Allow
+  #             - Action:
+  #               - codedeploy:CreateDeploymentGroup
+  #               - codedeploy:CreateDeployment
+  #               - codedeploy:GetDeployment
+  #               Resource:
+  #               - arn:aws:codedeploy:region:id:deploymentgroup:*
+  #               Effect: Allow
+  #             - Action:
+  #               - codedeploy:GetDeploymentConfig
+  #               Resource:
+  #               - arn:aws:codedeploy:region:id:deploymentconfig:*
+  #               Effect: Allow
 
   CodePipelineRole:
     Type: AWS::IAM::Role
@@ -214,7 +215,7 @@ Resources:
                   - "s3:GetObject"
                   - "s3:GetObjectVersion"
                   - "s3:PutObject"
-                Resource: "arn:aws:s3:::codepipeline-*/*"
+                Resource: "arn:aws:s3:::*"
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
@@ -293,11 +294,8 @@ Resources:
               Configuration:
                 ActionMode: CHANGE_SET_REPLACE
                 StackName: Serverless-Change-Set
-                Template: BuildOutputArtifact::outputSamTemplate.yml
-                Capabilities: CAPABILITY_IAM
-              RoleArn: !Ref CloudFormationServiceRole
               RunOrder: 1
 
       ArtifactStore:
         Type: S3
-        Location: !Ref S3Bucket
+        Location: !Ref S3BuildBucket
