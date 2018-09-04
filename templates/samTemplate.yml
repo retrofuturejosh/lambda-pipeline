@@ -8,6 +8,7 @@ Resources:
       Handler: index.handler
       Runtime: nodejs8.10
       CodeUri: ../src
+      AutoPublishAlias: Prod
       DeploymentPreference:
        Type: Canary10Percent10Minutes
       Events:
