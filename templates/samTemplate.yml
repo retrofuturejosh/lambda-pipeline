@@ -53,3 +53,16 @@ Resources:
       Environment:
         Variables:
           CURRENT_VERSION: !GetAtt HelloWorldFunc.Arn
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+          - Effect: "Allow"
+            Action:
+              - "codedeploy:PutLifecycleEventHookExecutionStatus"
+            Resource: 'arn:aws:codedeploy:*'
+        - Version: "2012-10-17"
+          Statement:
+          - Effect: "Allow"
+            Action:
+              - "lambda:InvokeFunction"
+            Resource: '*'
