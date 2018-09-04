@@ -5,9 +5,9 @@ Resources:
   HelloWorldFunc:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/index.handler
+      Handler: index.handler
       Runtime: nodejs8.10
-      CodeUri: ./
+      CodeUri: ../src
       Events:
         MyServerlessAPI:
           Type: Api
