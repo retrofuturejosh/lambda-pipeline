@@ -52,7 +52,7 @@ Resources:
         Enabled: false
       Environment:
         Variables:
-          CURRENT_VERSION: !GetAtt HelloWorldFunc.Arn
+          CURRENT_VERSION: !Join [ ':' , [ !GetAtt HelloWorldFunc.Arn, 'prod'] ]
       Policies:
         - Version: "2012-10-17"
           Statement:
