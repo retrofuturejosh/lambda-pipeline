@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Hello World API
+Description: Simple API Endpoint configured using Swagger specified inline and backed by a Lambda function with pre-traffic Lambda testing during deployment
 Resources:
-  HellowWorld:
+  HelloWorldAPI:
     Type: AWS::Serverless::Api
     Properties:
         StageName: v1
@@ -14,28 +14,32 @@ Resources:
               "/HelloWorld":
                 get:
                   x-amazon-apigateway-integration:
-                    httpMethod: GET
+                    httpMethod: POST
                     type: aws_proxy
-                  #   uri:
-                  #     Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MyLambdaFunction.Arn}/invocations
-                  # responses: {}
+                    uri:
+                      Fn::Sub: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${HelloWorldFunc.Arn}:prod/invocations
+                  responses: {}
 
   HelloWorldFunc:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs6.10
       CodeUri: ../src
-      AutoPublishAlias: Prod
+      AutoPublishAlias: prod
       DeploymentPreference:
-       Type: Linear10PercentEvery1Minute
+        Type: Linear10PercentEvery1Minute
+        Hooks:
+          # Validation Lambda function run before traffic shift
+          PreTraffic: !Ref PreTrafficLambdaFunction
       Events:
-        MyServerlessAPI:
+        GetApi:
           Type: Api
           Properties:
             Path: /HelloWorld
             Method: GET
-            RestApiId: !Ref HelloWorldAPI
+            RestApiId:
+                Ref: HelloWorldAPI
 
   PreTrafficLambdaFunction:
     Type: AWS::Serverless::Function
@@ -48,4 +52,4 @@ Resources:
         Enabled: false
       Environment:
         Variables:
-          CURRENT_VERSION: !Ref HelloWorldFunc.Version
+          CURRENT_VERSION: !GetAtt HelloWorldFunc.Arn

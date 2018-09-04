@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple API Endpoint configured using Swagger specified inline and backed
+  by a Lambda function with pre-traffic Lambda testing during deployment
+Resources:
+  HelloWorldAPI:
+    Properties:
+      DefinitionBody:
+        info:
+          title: HelloWorldAPI
+        paths:
+          /HelloWorld:
+            get:
+              responses: {}
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${HelloWorldFunc.Arn}:prod/invocations
+        swagger: 2.0
+      StageName: v1
+    Type: AWS::Serverless::Api
+  HelloWorldFunc:
+    Properties:
+      AutoPublishAlias: prod
+      CodeUri: s3://sohnserverlessbucket/ea4b0ff2054038bd8fdbc3595865aa0d
+      DeploymentPreference:
+        Hooks:
+          PreTraffic:
+            Ref: PreTrafficLambdaFunction
+        Type: Linear10PercentEvery1Minute
+      Events:
+        GetApi:
+          Properties:
+            Method: GET
+            Path: /HelloWorld
+            RestApiId:
+              Ref: HelloWorldAPI
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+  PreTrafficLambdaFunction:
+    Properties:
+      CodeUri: s3://sohnserverlessbucket/ea4b0ff2054038bd8fdbc3595865aa0d
+      DeploymentPreference:
+        Enabled: false
+      Environment:
+        Variables:
+          CURRENT_VERSION:
+            Fn::GetAtt:
+            - HelloWorldFunc
+            - Arn
+      FunctionName: CodeDeploy_preTrafficHook
+      Handler: preTrafficHook.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
