@@ -10,7 +10,7 @@ Resources:
       CodeUri: ../src
       AutoPublishAlias: Prod
       DeploymentPreference:
-       Type: Canary10Percent10Minutes
+       Type: Linear10PercentEvery1Minute
       Events:
         MyServerlessAPI:
           Type: Api
