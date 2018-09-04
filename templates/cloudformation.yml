@@ -43,6 +43,13 @@ Resources:
                   - "cloudformation.amazonaws.com"
               Action:
                 - "sts:AssumeRole"
+            -
+              Effect: Allow
+              Principal:
+                Service:
+                  - "codedeploy.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
         Path: "/"
         Policies:
           -
@@ -215,6 +222,7 @@ Resources:
                 ActionMode: CHANGE_SET_EXECUTE
                 StackName: Serverless-Stack
                 ChangeSetName: Serverless-Change-Set
+                RoleArn: !GetAtt CodePipelineRole.Arn
               RunOrder: 2
 
       ArtifactStore:
