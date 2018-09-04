@@ -54,11 +54,7 @@ Resources:
                   Effect: Allow
                   Action:
                     - cloudformation:CreateChangeSet
-                    - codedeploy:CreateDeploymentGroup
-                    - "codedeploy:GetApplicationRevision"
-                    - "codedeploy:GetDeployment"
-                    - "codedeploy:GetDeploymentConfig"
-                    - "codedeploy:RegisterApplicationRevision"
+                    - "codedeploy:*"
                     - "s3:GetObject"
                     - "s3:GetObjectVersion"
                     - "s3:GetBucketVersioning"
