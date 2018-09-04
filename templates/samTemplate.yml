@@ -2,11 +2,23 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Hello World API
 Resources:
-  HelloWorldAPI:
+  HellowWorld:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: v1
-      Name: HelloWorldAPI
+        StageName: v1
+        DefinitionBody:
+            swagger: 2.0
+            info:
+              title: HelloWorldAPI
+            paths:
+              "/HelloWorld":
+                get:
+                  x-amazon-apigateway-integration:
+                    httpMethod: GET
+                    type: aws_proxy
+                  #   uri:
+                  #     Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MyLambdaFunction.Arn}/invocations
+                  # responses: {}
 
   HelloWorldFunc:
     Type: AWS::Serverless::Function
@@ -25,3 +37,15 @@ Resources:
             Method: GET
             RestApiId: !Ref HelloWorldAPI
 
+  PreTrafficLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src
+      Handler: preTrafficHook.handler
+      Runtime: nodejs8.10
+      FunctionName: 'CodeDeploy_preTrafficHook'
+      DeploymentPreference:
+        Enabled: false
+      Environment:
+        Variables:
+          CURRENT_VERSION: !Ref HelloWorldFunc.Version
