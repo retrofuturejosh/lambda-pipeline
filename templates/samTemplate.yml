@@ -2,6 +2,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Hello World API
 Resources:
+  HelloWorldAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: v1
+      Name: HelloWorldAPI
+
   HelloWorldFunc:
     Type: AWS::Serverless::Function
     Properties:
@@ -17,3 +23,5 @@ Resources:
           Properties:
             Path: /HelloWorld
             Method: GET
+            RestApiId: !Ref HelloWorldAPI
+
