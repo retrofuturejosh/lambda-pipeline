@@ -59,10 +59,10 @@ Resources:
           - Effect: "Allow"
             Action:
               - "codedeploy:PutLifecycleEventHookExecutionStatus"
-            Resource: 'arn:aws:codedeploy:*'
+            Resource: '*'
         - Version: "2012-10-17"
           Statement:
           - Effect: "Allow"
             Action:
-              - "lambda:InvokeFunction"
+              - "lambda:*"
             Resource: '*'
