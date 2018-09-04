@@ -8,6 +8,8 @@ Resources:
       Handler: index.handler
       Runtime: nodejs8.10
       CodeUri: ../src
+      DeploymentPreference:
+       Type: Canary10Percent10Minutes
       Events:
         MyServerlessAPI:
           Type: Api
