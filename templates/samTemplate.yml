@@ -65,4 +65,4 @@ Resources:
           - Effect: "Allow"
             Action:
               - "lambda:*"
-            Resource: '*'
+            Resource: 'arn:aws:lambda:*'
