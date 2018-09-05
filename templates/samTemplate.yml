@@ -3,6 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: Simple API Endpoint configured using Swagger specified inline and backed by a Lambda function with pre-traffic Lambda testing during deployment
 Resources:
   HelloWorldAPI:
+    Name: HelloWorldAPI
     Type: AWS::Serverless::Api
     Properties:
         StageName: v1
@@ -23,6 +24,7 @@ Resources:
   HelloWorldFunc:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: 'HelloWorldFunc'
       Handler: index.handler
       Runtime: nodejs6.10
       CodeUri: ../src
