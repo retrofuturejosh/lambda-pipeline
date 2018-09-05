@@ -33,7 +33,14 @@ Add a file `params.json` to the `/templates` folder with the required ParameterV
   }
 ]
 ```
-#### Step Two: Deploy Pipeline
+#### Step Two: Change Bucket Name in `buildspec.yml`
+In `buildspec.yml`, change the name of the bucket in the `aws cloudformation package` command on line 6. Any versioned bucket will work, but it's advisable to use the same bucket you passed as a value to `./templates/params.json`.
+```
+- aws cloudformation package --template-file ./templates/samTemplate.yml --s3-bucket <YOUR BUCKET NAME> --output-template-file outputSamTemplate.yml
+```
+
+
+#### Step Three: Deploy Pipeline
 ```
 npm run deploy-pipeline
 ```
