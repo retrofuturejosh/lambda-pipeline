@@ -39,13 +39,13 @@ Resources:
         Hooks:
           # Validation Lambda function run before traffic shift
           PreTraffic: !Ref PreTrafficLambdaFunction
-    Events:
-      GetApi:
-        Type: Api
-        Properties:
-          Path: /HelloWorld
-          Method: GET
-          RestApiId: !Ref HelloWorldAPI
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            Path: /HelloWorld
+            Method: get
+            RestApiId: !Ref HelloWorldAPI
 
   PreTrafficLambdaFunction:
     Type: AWS::Serverless::Function
@@ -79,4 +79,4 @@ Outputs:
     Description: "API Prod stage endpoint"
     Value:
       Fn::Sub:
-        "https://${HelloWorldAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+        "https://${HelloWorldAPI}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/"
