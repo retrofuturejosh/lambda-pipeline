@@ -29,12 +29,12 @@ Resources:
     'Fn::Transform':
       Name: 'AWS::Include'
       Parameters:
-        Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yml'
+        Location: 's3://sohnserverlessbucket/yml-files/helloWorld/helloWorld.yml'
   PreTrafficLambdaFunction:
     'Fn::Transform':
       Name: 'AWS::Include'
       Parameters:
-        Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yml'
+        Location: 's3://sohnserverlessbucket/yml-files/helloWorld/preTraffic.yml'
 
 Outputs:
   APIEndpoint:
