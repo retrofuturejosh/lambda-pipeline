@@ -5,7 +5,7 @@ const aws = require('aws-sdk');
 const codedeploy = new aws.CodeDeploy({ apiVersion: '2014-10-06' });
 const lambda = new aws.Lambda();
 
-const { handleLogic } = require('../../src/handlers/preTrafficHook');
+const { handleLogic } = require('../../../src/handlers/preTrafficHook');
 
 let codeDeployStub = stub(codedeploy, 'putLifecycleEventHookExecutionStatus');
 codeDeployStub.returns({
