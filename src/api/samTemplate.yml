@@ -24,50 +24,10 @@ Resources:
                       Fn::Sub: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${HelloWorldFunc.Arn}:prod/invocations
                   responses: {}
 
-  HelloWorldFunc:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: 'HelloWorldFunc'
-      Handler: helloWorld.handler
-      Runtime: nodejs8.10
-      CodeUri: ../handlers
-      AutoPublishAlias: prod
-      DeploymentPreference:
-        Type: AllAtOnce
-        Hooks:
-          # Validation Lambda function run before traffic shift
-          PreTraffic: !Ref PreTrafficLambdaFunction
-      Events:
-        GetApi:
-          Type: Api
-          Properties:
-            Path: /HelloWorld
-            Method: GET
-            RestApiId:
-                Ref: HelloWorldAPI
+  HelloWorldFunc: !include helloWorld/helloWorld.yml
+  PreTrafficLambdaFunction: !include helloWorld/preTraffic.yml
 
-  PreTrafficLambdaFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ../handlers
-      Handler: preTrafficHook.handler
-      Runtime: nodejs8.10
-      FunctionName: 'CodeDeployHook_preTrafficHook'
-      DeploymentPreference:
-        Enabled: false
-      Environment:
-        Variables:
-          CURRENT_VERSION: !Join [ ':' , [ !GetAtt HelloWorldFunc.Arn, 'prod'] ]
-      Policies:
-        - Version: "2012-10-17"
-          Statement:
-          - Effect: "Allow"
-            Action:
-              - "codedeploy:PutLifecycleEventHookExecutionStatus"
-            Resource: 'arn:aws:codedeploy:*'
-        - Version: "2012-10-17"
-          Statement:
-          - Effect: "Allow"
-            Action:
-              - "lambda:InvokeFunction"
-            Resource: '*'
+Outputs:
+  APIEndpoint:
+    Description: "API Prod stage endpoint"
+    Value: !Sub "https://${HelloWorldAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

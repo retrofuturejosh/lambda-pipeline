@@ -191,7 +191,7 @@ Resources:
                 ProjectName: !Ref CodeBuildProject
               RunOrder: 1
         -
-          Name: Deploy
+          Name: DeployDev
           Actions:
             -
               Name: ChangeSetReplace
@@ -224,6 +224,7 @@ Resources:
                 StackName: Serverless-Stack
                 ChangeSetName: Serverless-Change-Set
                 RoleArn: !GetAtt CodePipelineRole.Arn
+                OutputFileName: DevDeployOutput
               RunOrder: 2
 
       ArtifactStore:
