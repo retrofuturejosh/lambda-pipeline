@@ -3,7 +3,11 @@ const aws = require('aws-sdk');
 const codedeploy = new aws.CodeDeploy({ apiVersion: '2014-10-06' });
 const lambda = new aws.Lambda();
 
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
+  return handleLogic(event, codedeploy, lambda);
+};
+
+const handleLogic = async (event, codedeploy, lambda) => {
   console.log('Entering PreTraffic Hook!');
   console.log('Event is \n\n', JSON.stringify(event));
 
@@ -29,6 +33,7 @@ exports.handler = async (event, context) => {
     .invoke(lambdaParams)
     .promise()
     .then(res => {
+      console.log('res is ', res);
       return JSON.parse(res.Payload);
     })
     .catch(err => {
@@ -54,4 +59,9 @@ exports.handler = async (event, context) => {
     .catch(err => {
       throw new Error(err);
     });
+};
+
+module.exports = {
+  handler,
+  handleLogic
 };
