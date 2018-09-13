@@ -210,6 +210,7 @@ Resources:
                 RoleArn: !GetAtt CodePipelineRole.Arn
                 Capabilities: CAPABILITY_IAM
                 TemplatePath: BuildOutputArtifact::outputSamTemplate.yml
+                TemplateConfiguration: BuildOutputArtifact::templateConfiguration.json
               RunOrder: 1
             -
               Name: ChangeSetExecture
