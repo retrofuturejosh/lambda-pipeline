@@ -9,7 +9,8 @@ Resources:
     Name: HelloWorldAPI
     Type: AWS::Serverless::Api
     Properties:
-        StageName: !Ref StageName
+        StageName:
+          Ref: StageName
         DefinitionBody:
             swagger: 2.0
             info:
@@ -24,10 +25,20 @@ Resources:
                       Fn::Sub: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/${HelloWorldFunc.Arn}:prod/invocations
                   responses: {}
 
-  HelloWorldFunc: !include helloWorld/helloWorld.yml
-  PreTrafficLambdaFunction: !include helloWorld/preTraffic.yml
+  HelloWorldFunc:
+    Transform:
+      Name: 'AWS::Include'
+      Parameters:
+        Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yaml'
+  PreTrafficLambdaFunction:
+    Transform:
+      Name: 'AWS::Include'
+      Parameters:
+        Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yaml'
 
 Outputs:
   APIEndpoint:
     Description: "API Prod stage endpoint"
-    Value: !Sub "https://${HelloWorldAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value:
+      Fn::Sub:
+        "https://${HelloWorldAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
