@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test' --recursive",
+    "test-api": "mocha 'test' --recursive",
+    "test-unit": "mocha 'test/lambda' --recursive",
+    "test": "npm run test-unit",
     "deploy-pipeline": "bash ./scripts/create-stacks.sh"
   },
   "keywords": [],
