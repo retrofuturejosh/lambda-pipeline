@@ -26,12 +26,12 @@ Resources:
                   responses: {}
 
   HelloWorldFunc:
-    Transform:
+    'Fn::Transform':
       Name: 'AWS::Include'
       Parameters:
         Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yaml'
   PreTrafficLambdaFunction:
-    Transform:
+    'Fn::Transform':
       Name: 'AWS::Include'
       Parameters:
         Location: 's3://sohnserverlessbucket/yml-files/helloWorld.yaml'
