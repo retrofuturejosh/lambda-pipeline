@@ -9,11 +9,11 @@ phases:
       - npm test
   build:
     commands:
-      - aws cloudformation package --template-file ./src/api/samTemplate.yml --s3-bucket sohnserverlessbucket --output-template-file outputSamTemplate.yml
+      - aws cloudformation package --template-file ./src/samTemplate.yml --s3-bucket sohnserverlessbucket --output-template-file outputSamTemplate.yml
 artifacts:
   type: zip
   files:
     - outputSamTemplate.yml
-    - src/api/config/devConfig.json
-    - src/api/config/prodConfig.json
+    - src/samConfig/devConfig.json
+    - src/samConfig/prodConfig.json
   discard-paths: yes

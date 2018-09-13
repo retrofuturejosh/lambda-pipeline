@@ -1,6 +1,0 @@
-{
-  "Parameters" : {
-    "StageName" : "dev",
-    "S3Bucket": "sohnserverlessbucket"
-  }
-}
