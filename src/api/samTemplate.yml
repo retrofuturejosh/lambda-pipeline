@@ -4,6 +4,9 @@ Description: Simple Hello World API Endpoint configured using Swagger specified 
 Parameters:
   StageName:
     Type: String
+  S3Bucket:
+    Type: String
+
 Resources:
   HelloWorldAPI:
     Name: HelloWorldAPI
