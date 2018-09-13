@@ -29,7 +29,7 @@ Resources:
     Properties:
       FunctionName: 'HelloWorldFunc'
       Handler: helloWorld.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       CodeUri: ../handlers
       AutoPublishAlias: prod
       DeploymentPreference:
