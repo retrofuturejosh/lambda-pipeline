@@ -25,9 +25,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: 'HelloWorldFunc'
-      Handler: index.handler
+      Handler: helloWorld.handler
       Runtime: nodejs6.10
-      CodeUri: ../src
+      CodeUri: ../handlers
       AutoPublishAlias: prod
       DeploymentPreference:
         Type: Linear10PercentEvery1Minute
@@ -47,7 +47,7 @@ Resources:
   PreTrafficLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ../src
+      CodeUri: ../handlers
       Handler: preTrafficHook.handler
       Runtime: nodejs8.10
       FunctionName: 'CodeDeployHook_preTrafficHook'

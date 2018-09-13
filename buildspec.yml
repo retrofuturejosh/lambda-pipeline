@@ -3,15 +3,13 @@ phases:
   install:
     commands:
       - npm install
-      - npm install -g aws-sam-local
-      - npm update -g aws-sam-local
-      - sam local start-api -t ./templates/samTemplate.yml
+      - npm install -g mocha
   pre_build:
     commands:
       - npm test
   build:
     commands:
-      - aws cloudformation package --template-file ./templates/samTemplate.yml --s3-bucket sohnserverlessbucket --output-template-file outputSamTemplate.yml
+      - aws cloudformation package --template-file ./src/api/samTemplate.yml --s3-bucket sohnserverlessbucket --output-template-file outputSamTemplate.yml
 artifacts:
   type: zip
   files:

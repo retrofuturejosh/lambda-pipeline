@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const { getHandler } = require('../../src/index');
+const { getHandler } = require('../../src/handlers/helloWorld');
 
 describe('Hello World Lambda', () => {
   it('returns correct JSON', () => {
