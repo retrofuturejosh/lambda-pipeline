@@ -14,5 +14,6 @@ artifacts:
   type: zip
   files:
     - outputSamTemplate.yml
-    - src/api/templateConfiguration.json
+    - src/api/devConfig.json
+    - src/api/prodConfig.json
   discard-paths: yes

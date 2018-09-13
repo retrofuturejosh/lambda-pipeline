@@ -42,7 +42,8 @@ const handleLogic = async (event, codedeploy, lambda) => {
 
   // test results of lambda here
   // change codeDeploy status to Succeeded if tests pass
-  if (lambdaResponse.statusCode === '200') {
+  console.log('lambdaResponse is', lambdaResponse);
+  if (lambdaResponse.statusCode === 200) {
     codedeployParams.status = 'Succeeded';
     console.log('Tests Passed');
   } else {

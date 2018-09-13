@@ -21,7 +21,7 @@ lambdaStub.returns({
   promise: () => {
     return Promise.resolve({
       Payload: JSON.stringify({
-        statusCode: '200'
+        statusCode: 200
       })
     });
   }
