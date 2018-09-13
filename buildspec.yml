@@ -3,9 +3,6 @@ phases:
   install:
     commands:
       - npm install
-      - npm install -g aws-sam-local
-      - npm update -g aws-sam-local
-      - sam local start-api -t ./templates/samTemplate.yml
   pre_build:
     commands:
       - npm test
