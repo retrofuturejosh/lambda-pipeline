@@ -211,7 +211,6 @@ Resources:
                 Capabilities: CAPABILITY_IAM
                 TemplatePath: BuildOutputArtifact::outputSamTemplate.yml
                 TemplateConfiguration: BuildOutputArtifact::devConfig.json
-                OutputFileName: DevDeployOutput
               RunOrder: 1
             -
               Name: ChangeSetExecture
