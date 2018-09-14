@@ -211,6 +211,7 @@ Resources:
                 Capabilities: CAPABILITY_IAM
                 TemplatePath: BuildOutputArtifact::outputSamTemplate.yml
                 TemplateConfiguration: BuildOutputArtifact::devConfig.json
+                OutputFileName: DevDeployOutput
               RunOrder: 1
             -
               Name: ChangeSetExecture
@@ -224,7 +225,6 @@ Resources:
                 StackName: Serverless-Stack
                 ChangeSetName: Serverless-Change-Set
                 RoleArn: !GetAtt CodePipelineRole.Arn
-                OutputFileName: DevDeployOutput
               RunOrder: 2
 
       ArtifactStore:
