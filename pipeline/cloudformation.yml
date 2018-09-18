@@ -280,6 +280,8 @@ Resources:
                 Provider: CodeBuild
               InputArtifacts:
                 - Name: SourceCodeOutputArtifact
+              OutputArtifacts:
+                - Name: DeployTestArtifact
               Configuration:
                 ProjectName: !Ref CodeBuildDeploymentTesting
               RunOrder: 2

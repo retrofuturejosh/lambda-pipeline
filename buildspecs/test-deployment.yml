@@ -7,3 +7,4 @@ phases:
   pre_build:
     commands:
       - npm run test-deployment
+      - aws s3 cp results s3://sohnserverlessbucket/integration-tests/results
