@@ -36,6 +36,10 @@ Resources:
       AutoPublishAlias: prod
       DeploymentPreference:
         Type: AllAtOnce
+        Alarms:
+          - !Ref 5xxAlarm
+          - !Ref 4xxAlarm
+          - !Ref LatencyAlarm
         Hooks:
           # Validation Lambda function run before traffic shift
           PreTraffic: !Ref PreTrafficLambdaFunction
@@ -72,6 +76,55 @@ Resources:
             Action:
               - "lambda:InvokeFunction"
             Resource: '*'
+
+  #
+  # Lambda Deployment - API Gateway alarms
+  #
+  5xxAlarm:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn: RestApi
+    Properties:
+      AlarmDescription: 5xx alarm for api gateway
+      Namespace: 'AWS/ApiGateway'
+      MetricName: 5XXError
+      Dimensions:
+        - Name: ApiName
+          Value: !Ref HelloWorldAPI
+      Statistic: Sum
+      Period: '60'
+      EvaluationPeriods: '3'
+      Threshold: '5'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+  4xxAlarm:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn: RestApi
+    Properties:
+      AlarmDescription: 4xx alarm for api gateway
+      Namespace: 'AWS/ApiGateway'
+      MetricName: 4XXError
+      Dimensions:
+        - Name: ApiName
+          Value: !Ref HelloWorldAPI
+      Statistic: Sum
+      Period: '60'
+      EvaluationPeriods: '3'
+      Threshold: '5'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+  LatencyAlarm:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn: RestApi
+    Properties:
+      AlarmDescription: latency alarm for api gateway
+      Namespace: 'AWS/ApiGateway'
+      MetricName: Latency
+      Dimensions:
+        - Name: ApiName
+          Value: !Ref HelloWorldAPI
+      Statistic: Average
+      Period: '60'
+      EvaluationPeriods: '3'
+      Threshold: '25000'
+      ComparisonOperator: GreaterThanOrEqualToThreshold
 
 
 Outputs:

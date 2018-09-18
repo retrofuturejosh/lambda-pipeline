@@ -8,7 +8,7 @@ This is an example CI/CD pipeline, deploying a Lambda/API Gateway serverless pro
 2. Node.js - [Download/Install](https://nodejs.org/en/download/)
 3. GitHub Access Token - [Creating a personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
 #### Step One: Add params.json
-Add a file `params.json` to the `/templates` folder with the required ParameterValues.
+Add a file `params.json` to the `/pipeline` folder with the required ParameterValues.
 ```
 [
   {
@@ -34,7 +34,7 @@ Add a file `params.json` to the `/templates` folder with the required ParameterV
 ]
 ```
 #### Step Two: Change Bucket Name in `buildspec.yml`
-In `buildspec.yml`, change the name of the bucket in the `aws cloudformation package` command on line 6. Any versioned bucket will work, but it's advisable to use the same bucket you passed as a value to `./templates/params.json`.
+In `buildspec.yml`, change the name of the bucket in the `aws cloudformation package` command on line 6. Any versioned bucket will work, but it's advisable to use the same bucket you passed as a value to `./pipeline/params.json`.
 ```
 - aws cloudformation package --template-file ./templates/samTemplate.yml --s3-bucket <YOUR BUCKET NAME> --output-template-file outputSamTemplate.yml
 ```

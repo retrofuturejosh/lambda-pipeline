@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-api": "mocha 'test' --recursive",
-    "test-unit": "mocha 'test/unit/handlers' --recursive",
-    "test": "npm run test-unit",
+    "test-api": "NODE_ENV=integration node test/unit/utils/getEndpoint.js && mocha 'test/unit/api' --recursive",
+    "test-unit": "mocha $(find . -name '*spec.js' ! -ipath '*node_modules*' ! -ipath '*api*')",
+    "test": "npm run test-unit ",
     "deploy-pipeline": "bash ./scripts/create-stacks.sh"
   },
   "keywords": [],
