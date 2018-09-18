@@ -4,7 +4,7 @@ const aws = require('aws-sdk');
 
 const apigateway = new aws.APIGateway({ region: 'us-east-1' });
 
-const { getEndpoint } = require('./getEndpoint');
+const { fetchEndpoint, getEndpoint } = require('../integration/utils/getEndpoint');
 
 // stub service
 let apigatewayStub = stub(apigateway, 'getRestApis');
@@ -33,10 +33,14 @@ apigatewayStub.returns({
 });
 
 describe('API Integration getEndpoint function', () => {
-  it('should return the correct endpoint', async () => {
-    let res = await getEndpoint('testAPIName', 'us-east-1', 'dev', apigateway);
+  it('fetchEndpoint() should return the correct endpoint', async () => {
+    let res = await fetchEndpoint('testAPIName', 'us-east-1', 'dev', apigateway);
     expect(res).to.equal(
       'https://testId.execute-api.us-east-1.amazonaws.com/dev'
     );
   });
+  it('getEndpoint() should return local host if environment is local', async () => {
+    let endpoint = await getEndpoint();
+    expect(endpoint).to.equal('http://localhost:3000');
+  })
 });

@@ -9,7 +9,7 @@ const apigateway = new aws.APIGateway({ region: 'us-east-1' });
  * @param {String} stageName - name of desired stage
  * @param {Service} apigateway - instance of aws.APIGateway()
  */
-async function getEndpoint(apiName, region, stageName, apigateway) {
+async function fetchEndpoint(apiName, region, stageName, apigateway) {
   /**
    * returns list of APIs in account
    */
@@ -42,17 +42,13 @@ async function getEndpoint(apiName, region, stageName, apigateway) {
   }
 }
 
-// const writeEndpoint = async (apiName, region, stage) => {
-//   try {
-//     let endpoint = await getEndpoint(apiName, region, stage, apigateway);
-//     fs.writeFileSync('./endpoint.js', JSON.stringify({ endpoint }));
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// writeEndpoint('HelloWorldAPI', 'us-east-1', 'dev');
+function getEndpoint() {
+  return process.env.NODE_ENV === 'integration'
+    ? fetchEndpoint('HelloWorldAPI', 'us-east-1', 'dev', apigateway)
+    : 'http://localhost:3000';
+}
 
 module.exports = {
+  fetchEndpoint,
   getEndpoint
 };

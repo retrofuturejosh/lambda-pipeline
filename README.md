@@ -46,6 +46,22 @@ npm run deploy-pipeline
 ```
 CodePipeline revision will trigger after CloudFormation successfully builds stack. After pipeline completes deployment, API route `https://<UNIQUE-ENDPOINT>/v1/HelloWorld` should return `"Hello World, I'm your serverless application!"`
 
+### Locally Testing API Gateway
+#### Install SAM CLI (if you haven't)
+```
+npm install -g aws-sam-local
+npm update -g aws-sam-local
+```
+#### Start Local API Gateway
+```
+sam local start-api -t src/samTemplate.yml
+```
+#### Run integration tests
+Integration spec files are located in `/test/integration/api/`
+```
+npm run test-api-local
+```
+
 ## Useful Docs
 - [CodePipeline Docs](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html)
 - [CodeBuild Docs](https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html)

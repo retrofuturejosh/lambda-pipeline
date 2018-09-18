@@ -129,6 +129,7 @@ Resources:
                   - "s3:PutObject"
                 Resource: "arn:aws:s3:::*"
 
+  //unit tests and packaging
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -148,6 +149,23 @@ Resources:
         Type: CODEPIPELINE
       TimeoutInMinutes: 10
 
+  //integration testing
+  CodeBuildIntegrationTest:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Join [ '-' , [ !Ref GitHubRepoName, !Ref GitHubBranch, 'integrationTest' ] ]
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Name: !Join [ '-' , [ !Ref GitHubRepoName, !Ref GitHubBranch ] ]
+        Type: CODEPIPELINE
+        Packaging: NONE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/nodejs:10.1.0
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 10
 
   CodePipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -225,6 +243,18 @@ Resources:
                 ChangeSetName: Serverless-Change-Set
                 RoleArn: !GetAtt CodePipelineRole.Arn
               RunOrder: 2
+        -
+          Name: IntegrationTest-Dev
+          Actions:
+            - Name: CodeBuild
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref CodeBuildIntegrationTest
+              RunOrder: 1
 
       ArtifactStore:
         Type: S3

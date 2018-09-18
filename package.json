@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-api": "NODE_ENV=integration node test/unit/utils/getEndpoint.js && mocha 'test/unit/api' --recursive",
+    "test-api": "NODE_ENV=integration mocha 'test/integration/api' --recursive",
+    "test-api-local": "NODE_ENV=local mocha 'test/integration/api' --recursive",
     "test-unit": "mocha $(find . -name '*spec.js' ! -ipath '*node_modules*' ! -ipath '*api*')",
     "test": "npm run test-unit ",
     "deploy-pipeline": "bash ./scripts/create-stacks.sh"
