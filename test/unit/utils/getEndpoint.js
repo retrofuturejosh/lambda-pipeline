@@ -42,16 +42,16 @@ async function getEndpoint(apiName, region, stageName, apigateway) {
   }
 }
 
-const writeEndpoint = async (apiName, region, stage) => {
-  try {
-    let endpoint = await getEndpoint(apiName, region, stage, apigateway);
-    fs.writeFileSync('./endpoint.js', JSON.stringify({ endpoint }));
-  } catch (err) {
-    console.log(err);
-  }
-};
+// const writeEndpoint = async (apiName, region, stage) => {
+//   try {
+//     let endpoint = await getEndpoint(apiName, region, stage, apigateway);
+//     fs.writeFileSync('./endpoint.js', JSON.stringify({ endpoint }));
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
-writeEndpoint('HelloWorldAPI', 'us-east-1', 'dev');
+// writeEndpoint('HelloWorldAPI', 'us-east-1', 'dev');
 
 module.exports = {
   getEndpoint
