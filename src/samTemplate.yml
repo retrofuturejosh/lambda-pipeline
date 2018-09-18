@@ -35,7 +35,7 @@ Resources:
       CodeUri: ./handlers
       AutoPublishAlias: prod
       DeploymentPreference:
-        Type: AllAtOnce
+        Type: Linear10PercentEvery1Minute
         Alarms:
           - !Ref 5xxAlarm
           - !Ref 4xxAlarm
