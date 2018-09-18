@@ -1,1 +1,0 @@
-{"endpoint":"https://vvkxcc6j4d.execute-api.us-east-1.amazonaws.com/dev"}

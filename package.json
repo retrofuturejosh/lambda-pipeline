@@ -8,7 +8,7 @@
     "test-api-local": "NODE_ENV=local mocha 'test/integration/api' --recursive",
     "test-unit": "mocha $(find . -name '*spec.js' ! -ipath '*node_modules*' ! -ipath '*api*')",
     "test": "npm run test-unit ",
-    "test-deployment": "node test/testBlueGreen.js",
+    "test-deployment": "NODE_ENV=integration node test/testBlueGreen.js",
     "deploy-pipeline": "bash ./scripts/create-stacks.sh"
   },
   "keywords": [],

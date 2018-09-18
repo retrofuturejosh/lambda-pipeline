@@ -5,8 +5,7 @@ let counter = 1;
 while (counter < 25) {
   setTimeout(() => {
     exec(
-      `NODE_ENV=integration mocha 'test/integration/api' --recursive`,
-      // `NODE_ENV=local mocha 'test/integration/api' --recursive`,
+      `mocha 'test/integration/api' --recursive`,
       (error, stdout, stderr) => {
         if (error) {
           throw new Error(error);

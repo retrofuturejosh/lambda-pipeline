@@ -129,7 +129,7 @@ Resources:
                   - "s3:PutObject"
                 Resource: "arn:aws:s3:::*"
 
-  //unit tests and packaging
+  # unit tests and packaging
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -149,7 +149,7 @@ Resources:
         Type: CODEPIPELINE
       TimeoutInMinutes: 10
 
-  //deployment testing
+  # deployment testing
   CodeBuildDeploymentTesting:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -169,7 +169,7 @@ Resources:
       TimeoutInMinutes: 15
 
 
-  //integration testing
+  # integration testing
   CodeBuildIntegrationTest:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -265,17 +265,17 @@ Resources:
                 RoleArn: !GetAtt CodePipelineRole.Arn
               RunOrder: 2
             -
-              Name: CodeBuild
-                ActionTypeId:
-                  Category: Build
-                  Owner: AWS
-                  Version: 1
-                  Provider: CodeBuild
-                InputArtifacts:
-                  - Name: SourceCodeOutputArtifact
-                Configuration:
-                  ProjectName: !Ref CodeBuildDeploymentTesting
-                RunOrder: 2
+              Name: TestDeployment
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              InputArtifacts:
+                - Name: SourceCodeOutputArtifact
+              Configuration:
+                ProjectName: !Ref CodeBuildDeploymentTesting
+              RunOrder: 2
         -
           Name: IntegrationTest-Dev
           Actions:
