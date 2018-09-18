@@ -153,6 +153,7 @@ Resources:
         Image: aws/codebuild/nodejs:10.1.0
       Source:
         Type: CODEPIPELINE
+        BuildSpec: buildspecs/buildspec.yml
       TimeoutInMinutes: 10
 
   # deployment testing
@@ -171,7 +172,7 @@ Resources:
         Image: aws/codebuild/nodejs:10.1.0
       Source:
         Type: CODEPIPELINE
-        BuildSpec: test-deployment.yml
+        BuildSpec: buildspecs/test-deployment.yml
       TimeoutInMinutes: 15
 
 
@@ -191,7 +192,7 @@ Resources:
         Image: aws/codebuild/nodejs:10.1.0
       Source:
         Type: CODEPIPELINE
-        BuildSpec: integration-buildspec.yml
+        BuildSpec: buildspecs/test-integration.yml
       TimeoutInMinutes: 10
 
   CodePipeline:
