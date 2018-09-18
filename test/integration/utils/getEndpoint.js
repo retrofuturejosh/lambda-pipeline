@@ -38,6 +38,7 @@ async function fetchEndpoint(apiName, region, stageName, apigateway) {
       apiInfo.id
     }.execute-api.${region}.amazonaws.com/${stageName}`;
   } catch (err) {
+    console.log('error is :', err);
     throw new Error('Problem fetching API endpoint', err);
   }
 }
