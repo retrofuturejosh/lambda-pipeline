@@ -6,7 +6,7 @@ const handler = (event, context, callback) => {
 const getHandler = event => {
   return {
     statusCode: 200,
-    body: `Hello World, I'm your serverless application!`
+    body: `Hello World! I am your serverless application! Pleased to meetcha!`
   };
 };
 

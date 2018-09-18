@@ -82,7 +82,7 @@ Resources:
   #
   5xxAlarm:
     Type: AWS::CloudWatch::Alarm
-    DependsOn: RestApi
+    DependsOn: HelloWorldAPI
     Properties:
       AlarmDescription: 5xx alarm for api gateway
       Namespace: 'AWS/ApiGateway'
@@ -97,7 +97,7 @@ Resources:
       ComparisonOperator: GreaterThanOrEqualToThreshold
   4xxAlarm:
     Type: AWS::CloudWatch::Alarm
-    DependsOn: RestApi
+    DependsOn: HelloWorldAPI
     Properties:
       AlarmDescription: 4xx alarm for api gateway
       Namespace: 'AWS/ApiGateway'
@@ -112,7 +112,7 @@ Resources:
       ComparisonOperator: GreaterThanOrEqualToThreshold
   LatencyAlarm:
     Type: AWS::CloudWatch::Alarm
-    DependsOn: RestApi
+    DependsOn: HelloWorldAPI
     Properties:
       AlarmDescription: latency alarm for api gateway
       Namespace: 'AWS/ApiGateway'
