@@ -5,7 +5,7 @@ let counter = 1;
 while (counter < 25) {
   setTimeout(() => {
     exec(
-      `mocha 'test/integration/api' --recursive`,
+      `npm run test-api`,
       (error, stdout, stderr) => {
         if (error) {
           throw new Error(error);

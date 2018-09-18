@@ -92,7 +92,7 @@ Resources:
           Value: !Ref HelloWorldAPI
       Statistic: Sum
       Period: '60'
-      EvaluationPeriods: '3'
+      EvaluationPeriods: '11'
       Threshold: '5'
       ComparisonOperator: GreaterThanOrEqualToThreshold
   4xxAlarm:
@@ -107,7 +107,7 @@ Resources:
           Value: !Ref HelloWorldAPI
       Statistic: Sum
       Period: '60'
-      EvaluationPeriods: '3'
+      EvaluationPeriods: '11'
       Threshold: '5'
       ComparisonOperator: GreaterThanOrEqualToThreshold
   LatencyAlarm:
@@ -122,7 +122,7 @@ Resources:
           Value: !Ref HelloWorldAPI
       Statistic: Average
       Period: '60'
-      EvaluationPeriods: '3'
+      EvaluationPeriods: '11'
       Threshold: '25000'
       ComparisonOperator: GreaterThanOrEqualToThreshold
 
