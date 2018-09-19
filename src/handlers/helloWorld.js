@@ -1,5 +1,5 @@
 const handler = (event, context, callback) => {
-  let response = getHandler();
+  const response = getHandler();
   callback(null, response);
 };
 

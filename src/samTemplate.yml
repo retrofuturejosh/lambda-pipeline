@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Hello World API Endpoint configured using Swagger specified inline and backed by a Lambda function with pre-traffic Lambda testing during deployment
+Description: Simple Hello World API Endpoint configured using Swagger specified inline and backed by a Lambda function with pre-traffic and post-traffic Lambda testing during deployment
 Parameters:
   StageName:
     Type: String
